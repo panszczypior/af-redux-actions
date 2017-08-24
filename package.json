@@ -13,5 +13,16 @@
     "mocha": "^3.5.0",
     "nyc": "^11.1.0",
     "sinon": "^3.2.1"
+  },
+  "scripts": {
+    "docs": "./node_modules/.bin/doxdox --layout markdown --output README.md 'src/**/*.js'",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha ./src/**/*.spec.js",
+    "test:watch": "./node_modules/.bin/mocha ./src/**/*.spec.js --watch",
+    "coverage": "./node_modules/.bin/nyc report"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js"
+    ]
   }
 }
