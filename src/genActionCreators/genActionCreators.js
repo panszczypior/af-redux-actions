@@ -1,32 +1,50 @@
-const actionCreatorFn = (type, payload) => ({
-  type,
-  payload,
-});
+const actionCreatorFn = (type, payload) => {
+  const action = { type };
 
-const genActionCreators = (creators) => (
-  Object.keys(creators).reduce((acc, curr) => 
-    Object.assign({}, acc, {
-      [curr]: creators[curr].default
-        ? (config = {}) => {
-          const type = config.success === undefined // eslint-disable-line no-nested-ternary
-            ? creators[curr].default
-            : (config.success === true
-              ? creators[curr].success
-              : creators[curr].failure
-            );
+  if (payload)
+    action.payload = payload;
 
-          const action = {
-            type,
-          };
+  return action;
+};
 
-          if (config.payload !== 'undefined') {
-            action.payload = config.payload;
-          }
+const genActionCreators = (creators) => {
+  const creatorsKeys = Object.keys(creators);
 
-          return action;
-        }
-        : actionCreatorFn.bind(null, creators[curr]),
-    }), {})
-);
+  return creatorsKeys.reduce((acc, curr) => {
+    let result = (...args) => actionCreatorFn(creators[curr], ...args);
+
+    if (
+      typeof creators[curr] === 'object' &&
+      !Array.isArray(creators[curr]) &&
+      creators[curr].default
+    ) {
+      result = (config) => {
+        let payload;
+        let type = creators[curr].default;
+
+        if (typeof config === 'object' && !Array.isArray(config)) {
+          payload = config.payload;
+
+          if (config.success === true)
+            type = creators[curr].success;
+          else if (config.success === false)
+            type = creators[curr].failure;
+        } else
+          payload = config;
+
+        const action = {
+          type,
+        };
+
+        if (payload !== undefined)
+          action.payload = payload;
+
+        return action;
+      };
+    }
+
+    return Object.assign({}, acc, { [curr]: result })
+  }, {});
+};
 
 module.exports = genActionCreators;
