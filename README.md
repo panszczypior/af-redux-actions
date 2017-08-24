@@ -10,7 +10,7 @@ Example usage
 import {
   genActionType,
   genActionCreators,
-} from './helpers';
+} from 'af-redux-actions';
 
 const genApiActions              = genActionType({ module: 'api' });
 
