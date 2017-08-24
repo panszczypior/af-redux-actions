@@ -13,11 +13,11 @@ const genActionCreators = (creators) => {
   return creatorsKeys.reduce((acc, curr) => {
     let result = (...args) => actionCreatorFn(creators[curr], ...args);
 
-    if (
-      typeof creators[curr] === 'object' &&
+    const isActionStatefull = typeof creators[curr] === 'object' &&
       !Array.isArray(creators[curr]) &&
-      creators[curr].default
-    ) {
+      creators[curr].default;
+
+    if (isActionStatefull) {
       result = (config) => {
         let payload;
         let type = creators[curr].default;
