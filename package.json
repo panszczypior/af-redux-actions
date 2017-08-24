@@ -5,5 +5,13 @@
   "main": "index.js",
   "repository": "git@github.com:tranotheron/af-redux-actions.git",
   "author": "Bartłomiej Smykla <bartek@smykla.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.1.1",
+    "doxdox": "^2.0.3",
+    "leche": "^2.2.1",
+    "mocha": "^3.5.0",
+    "nyc": "^11.1.0",
+    "sinon": "^3.2.1"
+  }
 }
