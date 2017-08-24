@@ -5,9 +5,7 @@ const defaultParams = {
   modulePrefix: '__',
 };
 
-const genActionType = (
-  initialParams = {}
-) => {
+const genActionType = (initialParams = {}) => {
   const newInitialParams = Object.assign(defaultParams, initialParams);
 
   return (type, params) => {
@@ -24,20 +22,25 @@ const genActionType = (
       modulePrefix,
     } = newParams;
 
-    return (
-      `${prefix
-        ? prefix + separator
-        : ''
-      }${module
-        ? modulePrefix + module + separator
-        : ''
-      }${success === true // eslint-disable-line no-nested-ternary
-        ? successPrefix + separator
-        : (success === false
-          ? failPrefix + separator
-          : '')
-      }${type}${postfix || ''}`
-    );
+    let result = '';
+
+    if (prefix)
+      result += prefix + separator;
+
+    if (module)
+      result += modulePrefix + module + separator;
+
+    if (success === true)
+      result += successPrefix + separator;
+    else if (success === false)
+      result += failPrefix + separator;
+
+    result += type;
+
+    if (postfix)
+      result += postfix;
+
+    return result;
   };
 };
 
