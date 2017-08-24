@@ -1,6 +1,6 @@
 {
   "name": "af-redux-actions",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "utility functions for redux actions and action creators",
   "main": "index.js",
   "repository": "git@github.com:tranotheron/af-redux-actions.git",
